@@ -12,14 +12,14 @@
         
         <h1>2048</h1>
         <p class="head">Join the tiles, get to <b>2048!</b></p>
-        <a href="" class="head"><b>How to play</b></a>
+        <a href="#howToPlay" class="head"><b>How to play</b></a>
         <hr>
 
         <div class="score">
             <h3>SCORE <p id="score">0</p></h3>
             <h3>BEST <p id="highScore">0</p></h3>
         </div>    
-        <div id="board">
+        <div class="board" id="board">
         </div>
         <!-- <div class="gameOver" id="gameOver">
             <p>Game over!</p>
@@ -29,6 +29,8 @@
             <input type="button" value="Change theme" id="changeTheme">
             <input type="button" value="New Game !!!" id="newGame">
         </div>
+        <hr>
+        <p class="howToPlay" id="howToPlay"><b>HOW TO PLAY:</b> Use your <b>arrow keys</b> to move the tiles. Tiles with the same number <b>merge into one</b> when they touch. Add them up to reach <b>2048!</b></p>
         <script src="2048.js"></script>
     </body>
 </html>

@@ -4,7 +4,7 @@ class Board {
         this.highScore = 0;
         this.rows = 4;
         this.columns = 4;
-        // this.isPlaying = true;
+        this.isPlaying = true;
         this.grid = [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
@@ -256,9 +256,20 @@ class Board {
             else return false;
         }
     }
+    changeTheme() {
+        if(document.body.className == "blue-theme") {
+            document.body.classList.value = "";
+        }
+        else if(document.body.className == "") {
+            document.body.classList.add("blue-theme");
+        }
+    }
 }
 
 board = new Board();
+document.addEventListener('keydown', (e) => {
+    e.preventDefault();
+})
 document.addEventListener('keyup', (e) => {
     if (e.code == "ArrowLeft") {
         board.slideLeft();
@@ -272,6 +283,7 @@ document.addEventListener('keyup', (e) => {
     if (e.code == "ArrowDown") {
         board.slideDown();
     }
+    
     document.getElementById("score").innerText = board.score;
     if(board.checkGameOver()) {
         //hiện bảng game over
@@ -280,8 +292,14 @@ document.addEventListener('keyup', (e) => {
     }
 })
 
-document.getElementById('newGame').onclick = function () { board.reset();};
+document.getElementById('newGame').onclick = function () { 
+    document.getElementById('gameOver').style.display = "none";
+    board.reset();
+};
 document.getElementById('tryAgain').onclick = function () { 
     document.getElementById('gameOver').style.display = "none";
     board.reset();
+};
+document.getElementById('changeTheme').onclick = function () { 
+    board.changeTheme();
 };

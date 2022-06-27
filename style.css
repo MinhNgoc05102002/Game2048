@@ -10,7 +10,7 @@ h1 {
     font-size: 64px;
     padding: 0px;
     margin: 10px;
-    margin-top: 20px;
+    margin-top: 15px;
     color: #776e65;
     font-weight: bolder;
 }
@@ -56,7 +56,7 @@ input {
     color: white;
     font-weight: bold;
 }
-#board {
+.board {
     width: 400px;
     height: 400px;
 
@@ -96,7 +96,14 @@ input {
     justify-content: center;
     align-items: center;
 }
-
+.howToPlay {
+    width: 500px;
+    margin: 20px auto ;
+    text-align: left;
+    color: #776e65;
+    font-size: 18px;
+    line-height: 30px;
+}
 
 /* colored tiles */
 
@@ -152,5 +159,91 @@ input {
 
 .x2048{
     background-color: #ecc230;
+    color: white;
+}
+
+/* blue theme */
+.blue-theme {
+    background-color: #dfe9ef;
+}
+.blue-theme > * {
+    color: #296083;
+}
+.blue-theme h3 {
+    background-color: #849dac;
+}
+.blue-theme > .board {
+    background-color: #849dac ;
+    border: 6px solid #849dac;
+}
+
+.blue-theme input {
+    background-color: #6b748a;
+    color: white;
+}
+
+.blue-theme .gameOver {
+    background-color: rgba(255,255,255, 0.4);
+}
+.blue-theme .gameOver>p {
+    color: #776e65;
+}
+.blue-theme .tile {
+    background-color: #bfcad0;
+    border: 5px solid #849dac;
+}
+
+.blue-theme .x2 {
+    background-color: #dde8ed;
+    color: #727371;
+}
+
+.blue-theme .x4 {
+    background-color: #c1cfed;
+    color: #727371;
+}
+
+.blue-theme .x8 {
+    background-color: #8ebce6;
+    color: white;
+}
+
+.blue-theme .x16{
+    background-color: #72b0ea;
+    color: white;
+}
+
+.blue-theme .x32{
+    background-color: #408bd1;
+    color: white;
+}
+
+.blue-theme .x64{
+    background-color: #1971d5;
+    color: white;
+}
+
+.blue-theme .x128{
+    background-color: #193bd5;
+    color: white;
+}
+
+.blue-theme .x256{
+    background-color: #1030be;
+    color: white;
+}
+
+.blue-theme .x512{
+    background-color: #1b0491;
+    color: white;
+}
+
+.blue-theme .x1024{
+    background-color: #310070;
+    color: white;
+}
+
+.blue-theme .x2048{
+    background-color: #451860;
     color: white;
 }
