@@ -54,6 +54,7 @@ input {
     height: 50px;
     font-size: 20px;
     color: white;
+    font-weight: bold;
 }
 #board {
     width: 400px;
@@ -66,7 +67,23 @@ input {
     display: flex;
     flex-wrap: wrap;
 }
-
+.gameOver {
+    width: 415px;
+    height: 415px;
+    background-color: rgba(255,255,255, 0.4);
+    border-radius: 5px;
+    margin-top: -410px;
+    margin-left: -5px;
+    margin-right: -5px;
+    display: none;
+}
+.gameOver>p {
+    font-size: 60px;
+    padding: 0px;
+    margin: 120px 10px 20px;
+    color: #776e65;
+    font-weight: 800;
+}
 .tile {
     width: 90px;
     height: 90px;

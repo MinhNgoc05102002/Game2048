@@ -4,6 +4,7 @@ class Board {
         this.highScore = 0;
         this.rows = 4;
         this.columns = 4;
+        // this.isPlaying = true;
         this.grid = [
             [0, 0, 0, 0],
             [0, 0, 0, 0],
@@ -22,6 +23,21 @@ class Board {
         //create 2 to begin the game
         this.setTwo();
         this.setTwo();
+
+        // create the board end game 
+        let gameOver = document.createElement("div");
+        gameOver.id = "gameOver";
+        gameOver.classList.add("gameOver");
+        let p = document.createElement("p");
+        p.innerHTML = "Game Over";
+        document.getElementById("board").append(gameOver);
+        document.getElementById("gameOver").append(p);
+        let input = document.createElement("input");
+        input.type = "button";
+        input.value = "Try Again";
+        input.id = "tryAgain";
+        document.getElementById("gameOver").append(input);
+        // document.getElementById('gameOver').style.display = "block";
     }
     
     reset() {
@@ -85,6 +101,7 @@ class Board {
     }
 
     checkSlide(newGrid) {
+        
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
                 if(newGrid[r][c] != this.grid[r][c])  return true;
@@ -94,6 +111,7 @@ class Board {
     }
 
     slideLeft() {
+        // if(!this.isPlaying) return false;
         let tmp = [[],[],[],[]];
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
@@ -119,6 +137,7 @@ class Board {
     }
 
     slideRight() {
+        // if(!this.isPlaying) return false;
         let tmp = [[],[],[],[]];
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
@@ -147,6 +166,7 @@ class Board {
     }
 
     slideUp() {
+        // if(!this.isPlaying) return false;
         let tmp = [[],[],[],[]];
         for (let c = 0; c < this.columns; c++) {
             let row = [this.grid[0][c], this.grid[1][c], this.grid[2][c], this.grid[3][c]];
@@ -170,6 +190,7 @@ class Board {
     }
 
     slideDown() {
+        // if(!this.isPlaying) return false;
         let tmp = [[],[],[],[]];
         for (let c = 0; c < this.columns; c++) {
             let row = [this.grid[0][c], this.grid[1][c], this.grid[2][c], this.grid[3][c]];
@@ -228,8 +249,11 @@ class Board {
     checkGameOver() {
         if(this.hasEmptyTile()) return false;
         else {
-            if (this.slideRight && this.slideLeft && this.slideUp && this.slideDown)
+            if (this.slideRight() == false && this.slideLeft() == false && this.slideUp() == false && this.slideDown() == false) {
+                this.isPlaying = false;
                 return true;
+            }
+            else return false;
         }
     }
 }
@@ -239,20 +263,25 @@ document.addEventListener('keyup', (e) => {
     if (e.code == "ArrowLeft") {
         board.slideLeft();
     }
-    else if (e.code == "ArrowRight") {
+    if (e.code == "ArrowRight") {
         board.slideRight();
     }
-    else if (e.code == "ArrowUp") {
+    if (e.code == "ArrowUp") {
         board.slideUp();
     }
-    else if (e.code == "ArrowDown") {
+    if (e.code == "ArrowDown") {
         board.slideDown();
     }
     document.getElementById("score").innerText = board.score;
     if(board.checkGameOver()) {
         //hiện bảng game over
+        document.getElementById('gameOver').style.display = "block";
         console.log("gameOver");
     }
 })
 
 document.getElementById('newGame').onclick = function () { board.reset();};
+document.getElementById('tryAgain').onclick = function () { 
+    document.getElementById('gameOver').style.display = "none";
+    board.reset();
+};
