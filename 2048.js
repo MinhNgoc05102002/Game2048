@@ -23,21 +23,6 @@ class Board {
         //create 2 to begin the game
         this.setTwo();
         this.setTwo();
-
-        // create the board end game 
-        let gameOver = document.createElement("div");
-        gameOver.id = "gameOver";
-        gameOver.classList.add("gameOver");
-        let p = document.createElement("p");
-        p.innerHTML = "Game Over";
-        document.getElementById("board").append(gameOver);
-        document.getElementById("gameOver").append(p);
-        let input = document.createElement("input");
-        input.type = "button";
-        input.value = "Try Again";
-        input.id = "tryAgain";
-        document.getElementById("gameOver").append(input);
-        // document.getElementById('gameOver').style.display = "block";
     }
     
     reset() {
