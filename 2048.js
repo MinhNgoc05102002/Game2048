@@ -50,7 +50,7 @@ class Board {
         tile.classList.add("tile");
         if (num > 0) {
             tile.innerText = num.toString();
-            tile.classList.add("x"+num.toString());                
+            tile.classList.add("x" +num.toString());                
         }
     }
 
@@ -62,6 +62,7 @@ class Board {
                 this.updateTile(tile, num);
             }
         }
+        document.getElementById("score").innerText = this.score;
     }
 
     filterZero(row){
@@ -86,7 +87,6 @@ class Board {
     }
 
     checkSlide(newGrid) {
-        
         for (let r = 0; r < this.rows; r++) {
             for (let c = 0; c < this.columns; c++) {
                 if(newGrid[r][c] != this.grid[r][c])  return true;
@@ -95,63 +95,49 @@ class Board {
         return false;
     }
 
-    slideLeft() {
-        // if(!this.isPlaying) return false;
-        let tmp = [[],[],[],[]];
-        for (let r = 0; r < this.rows; r++) {
-            for (let c = 0; c < this.columns; c++) {
-                tmp[r][c] = this.grid[r][c];
-            }
+    handleSlide(direction) {
+        if(direction == "left" && this.checkSlide(this.slideLeft())) {
+            this.grid = this.slideLeft();
         }
+        else 
+            if(direction == 'right' && this.checkSlide(this.slideRight())) {
+                this.grid = this.slideRight();
+            }
+            else 
+                if(direction == 'up' && this.checkSlide(this.slideUp())) {
+                    this.grid = this.slideUp();
+                }
+                else 
+                    if(direction == 'down' && this.checkSlide(this.slideDown())) {
+                        this.grid = this.slideDown();
+                    }
+                    else return;
+        this.updateBoard();
+        this.setTwo();
+    }
+
+    slideLeft() {
+        let tmp = Object.assign({}, this.grid);
         for (let r = 0; r < this.rows; r++) {
             let row = [].concat(this.grid[r]);
             row = this.slide(row);
             tmp[r] = row;
         }
-        if(this.checkSlide(tmp)) {
-            console.log("yes");
-            this.grid = tmp;
-            this.updateBoard();
-            this.setTwo();
-            return true;
-        }
-        else {
-            console.log("no pls");
-            return false;
-        }
+        return tmp;
     }
 
     slideRight() {
-        // if(!this.isPlaying) return false;
-        let tmp = [[],[],[],[]];
-        for (let r = 0; r < this.rows; r++) {
-            for (let c = 0; c < this.columns; c++) {
-                tmp[r][c] = this.grid[r][c];
-            }
-        }
+        let tmp = Object.assign({}, this.grid);
         for (let r = 0; r < this.rows; r++) {
             let row = [].concat(this.grid[r]);     
             row.reverse();            
             row = this.slide(row); 
             tmp[r] = row.reverse();
         }
-        // console.log(tmp);
-        // console.log(this.grid);
-        if(this.checkSlide(tmp)) {
-            console.log("yes");
-            this.grid = tmp;
-            this.updateBoard();
-            this.setTwo();
-            return true;
-        }
-        else {
-            console.log("no pls");
-            return false;
-        }
+        return tmp;
     }
 
     slideUp() {
-        // if(!this.isPlaying) return false;
         let tmp = [[],[],[],[]];
         for (let c = 0; c < this.columns; c++) {
             let row = [this.grid[0][c], this.grid[1][c], this.grid[2][c], this.grid[3][c]];
@@ -161,21 +147,10 @@ class Board {
             tmp[2][c] = row[2];
             tmp[3][c] = row[3];
         }
-        if(this.checkSlide(tmp)) {
-            console.log("yes");
-            this.grid = tmp;
-            this.updateBoard();
-            this.setTwo();
-            return true;
-        }
-        else {
-            console.log("no pls");
-            return false;
-        }
+        return tmp;
     }
 
     slideDown() {
-        // if(!this.isPlaying) return false;
         let tmp = [[],[],[],[]];
         for (let c = 0; c < this.columns; c++) {
             let row = [this.grid[0][c], this.grid[1][c], this.grid[2][c], this.grid[3][c]];
@@ -187,17 +162,7 @@ class Board {
             tmp[2][c] = row[2];
             tmp[3][c] = row[3];
         }
-        if(this.checkSlide(tmp)) {
-            console.log("yes");
-            this.grid = tmp;
-            this.updateBoard();
-            this.setTwo();
-            return true;
-        }
-        else {
-            console.log("no pls");
-            return false;
-        }
+        return tmp;
     }
 
     setTwo() {
@@ -234,7 +199,10 @@ class Board {
     checkGameOver() {
         if(this.hasEmptyTile()) return false;
         else {
-            if (this.slideRight() == false && this.slideLeft() == false && this.slideUp() == false && this.slideDown() == false) {
+            if (this.checkSlide(this.slideRight()) == false && 
+                this.checkSlide(this.slideLeft()) == false && 
+                this.checkSlide(this.slideUp()) == false && 
+                this.checkSlide(this.slideDown()) == false) {
                 this.isPlaying = false;
                 return true;
             }
@@ -251,25 +219,24 @@ class Board {
     }
 }
 
-board = new Board();
+let board = new Board();
 document.addEventListener('keydown', (e) => {
     e.preventDefault();
 })
 document.addEventListener('keyup', (e) => {
     if (e.code == "ArrowLeft") {
-        board.slideLeft();
+        board.handleSlide("left");
     }
     if (e.code == "ArrowRight") {
-        board.slideRight();
+        board.handleSlide("right");
     }
     if (e.code == "ArrowUp") {
-        board.slideUp();
+        board.handleSlide("up");
     }
     if (e.code == "ArrowDown") {
-        board.slideDown();
+        board.handleSlide("down");
     }
     
-    document.getElementById("score").innerText = board.score;
     if(board.checkGameOver()) {
         //hiện bảng game over
         document.getElementById('gameOver').style.display = "block";
